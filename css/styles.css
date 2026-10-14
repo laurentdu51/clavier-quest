@@ -259,6 +259,25 @@ body {
 .result__stat span { color: var(--muted); font-size: 13px; }
 .result__actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
+/* ---------- Points / indicateurs ---------- */
+.map-points {
+  font-size: 13px;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid var(--line);
+}
+.mission__hint {
+  color: var(--muted);
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .05);
+  border: 1px dashed var(--line);
+  align-self: flex-start;
+}
+
 /* ---------- Crédits ---------- */
 .card--credits {
   margin: auto;

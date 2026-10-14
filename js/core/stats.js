@@ -17,3 +17,17 @@ export function computeStars(result, mission) {
   if (t.three && result.accuracy >= (t.three.accuracy ?? 0) && result.wpm >= (t.three.wpm ?? 0)) stars = 3;
   return stars;
 }
+
+export function computePoints(result, mission) {
+  let pts = 0;
+  if (result.stars >= 1) pts = 10;
+  if (result.stars >= 2) pts = 20;
+  if (result.stars >= 3) pts = 30;
+
+  // Petit bonus vitesse si on dépasse bien le seuil 3★
+  const w3 = mission.stars?.three?.wpm ?? 0;
+  if (result.wpm >= w3 + 3) pts += 3;
+  if (result.wpm >= w3 + 6) pts += 2; // max +5
+
+  return Math.round(pts);
+}

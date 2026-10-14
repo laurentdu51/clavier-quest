@@ -2,7 +2,7 @@ import { $, el, clear, starRow } from "./utils/dom.js";
 import { state } from "./core/state.js";
 import { LAYOUTS, getLayout } from "./core/layout.js";
 import { TypingEngine } from "./core/engine.js";
-import { computeStars } from "./core/stats.js";
+import { computeStars, computePoints } from "./core/stats.js";
 import { CHAPTERS } from "./data/curriculum.js";
 import * as Missions from "./data/missions.js";
 import { KeyboardView } from "./ui/keyboardView.js";
@@ -112,8 +112,11 @@ function missionCard(mission) {
     card.append(chips);
   }
 
-  if (progress?.bestWpm) {
-    card.append(el("div", { class: "chapter__sub", text: `Record : ${progress.bestWpm} mots/min · ${progress.bestAccuracy}%` }));
+  if (!unlocked) {
+    const req = mission.requiredPoints ?? 0;
+    card.append(
+      el("div", { class: "mission__hint", text: `Points requis : ${req} pts` })
+    );
   }
 
   return card;
@@ -126,6 +129,9 @@ function renderMap() {
   const p = state.profile;
   $("#map-player").textContent = `${p.avatar} ${p.name || "Aventurier"}`;
 
+  const totalPts = Missions.totalPoints(state.data.progress);
+  const pointsEl = el("div", { class: "map-points", text: `Points totaux : ${totalPts} pts` });
+  $("#map-player").parentElement?.appendChild(pointsEl);
   CHAPTERS.forEach((chapter) => {
     const missions = Missions.missionsByChapter(chapter.id);
     const section = el("section", { class: "chapter" });
@@ -221,8 +227,16 @@ $("#btn-game-quit").addEventListener("click", quitMission);
 
 function finishMission(stats) {
   const stars = computeStars(stats, currentMission);
-  state.recordMission(currentMission.id, { stars, wpm: stats.wpm, accuracy: stats.accuracy });
-  lastResult = { stats, stars };
+  const points = computePoints(stats, currentMission);
+
+  state.recordMission(currentMission.id, {
+    stars,
+    wpm: stats.wpm,
+    accuracy: stats.accuracy,
+    points,
+  });
+
+  lastResult = { stats, stars, points };
 
   $("#result-title").textContent = stars >= 2 ? "Bravo !" : "Mission terminée !";
 
@@ -243,6 +257,7 @@ function finishMission(stats) {
     stat(stats.wpm, "mots/min", "Vitesse"),
     stat(stats.accuracy, "%", "Précision"),
     stat(stats.maxCombo, "x", "Meilleur combo"),
+    stat("+" + (lastResult.points || 0), "pts", "Points gagnés")
   );
 
   const next = Missions.nextMission(currentMission.id);

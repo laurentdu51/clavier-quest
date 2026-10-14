@@ -28,11 +28,12 @@ class State extends Emitter {
   }
 
   recordMission(id, result) {
-    const prev = this.data.progress[id] || { stars: 0, bestWpm: 0, bestAccuracy: 0 };
+    const prev = this.data.progress[id] || { stars: 0, bestWpm: 0, bestAccuracy: 0, bestPoints: 0 };
     this.data.progress[id] = {
       stars: Math.max(prev.stars, result.stars),
       bestWpm: Math.max(prev.bestWpm, Math.round(result.wpm)),
       bestAccuracy: Math.max(prev.bestAccuracy, Math.round(result.accuracy)),
+      bestPoints: Math.max(prev.bestPoints, result.points || 0),
       completed: true,
     };
     this.persist();
