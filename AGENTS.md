@@ -21,7 +21,7 @@ au plus rapide : lettres → syllabes → mots → phrases. Toute l'interface es
 ## Project Structure
 
 ```
-index.html            — Squelette : 4 écrans (accueil, carte, jeu, résultat)
+index.html            — Squelette : 5 écrans (accueil, carte, jeu, résultat, crédits)
 css/
   reset.css           — Reset minimal
   styles.css          — Thème, écrans, cartes, boutons, HUD, layout général
@@ -47,6 +47,7 @@ js/
 kubernet/             — Manifests Kubernetes + ArgoCD + kaniko
 Dockerfile, nginx.conf, docker-compose.yml
 DEPLOY.md             — Procédure de déploiement complète
+CHANGELOG.md          — Journal des modifications (Keep a Changelog)
 ```
 
 ## Key Commands

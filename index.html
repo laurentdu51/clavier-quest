@@ -33,6 +33,7 @@
         </div>
 
         <button class="btn btn--primary btn--big" id="btn-play">Jouer ▶</button>
+        <button class="btn btn--ghost btn--small" id="btn-credits">Crédits</button>
       </div>
     </section>
 
@@ -76,6 +77,43 @@
           <button class="btn btn--ghost" id="btn-result-map">Carte</button>
           <button class="btn btn--primary" id="btn-next">Mission suivante ▶</button>
         </div>
+      </div>
+    </section>
+
+    <!-- ============ CRÉDITS ============ -->
+    <section id="screen-credits" class="screen">
+      <div class="card card--credits">
+        <p class="logo">⌨️</p>
+        <h2 class="credits__title">Crédits</h2>
+
+        <div class="credits__section">
+          <h3>Le jeu</h3>
+          <p><strong>Clavier&nbsp;Quest</strong> — apprendre à taper au clavier en s'amusant,
+            du plus simple au plus rapide&nbsp;: lettres, syllabes, mots, phrases.</p>
+        </div>
+
+        <div class="credits__section">
+          <h3>Réalisation</h3>
+          <p>Duhaz · développé avec <strong>OpenCode</strong>.</p>
+        </div>
+
+        <div class="credits__section">
+          <h3>Technologies</h3>
+          <ul class="credits__list">
+            <li>HTML5 · CSS3 · JavaScript (modules ES natifs)</li>
+            <li>Clavier virtuel AZERTY &amp; QWERTY</li>
+            <li>nginx · Docker · Kubernetes / ArgoCD</li>
+          </ul>
+        </div>
+
+        <div class="credits__section">
+          <h3>Version</h3>
+          <p id="credits-version">v0.1.0 — « socle jouable »</p>
+        </div>
+
+        <p class="credits__note">Zéro dépendance externe — la progression est sauvegardée localement dans ton navigateur.</p>
+
+        <button class="btn btn--primary" id="btn-credits-back">← Accueil</button>
       </div>
     </section>
 

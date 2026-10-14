@@ -84,6 +84,7 @@ body {
 .btn--ghost { background: rgba(255, 255, 255, .06); border-color: var(--line); color: var(--text); }
 .btn--ghost:hover { background: rgba(255, 255, 255, .12); }
 .btn--big { padding: 16px 26px; font-size: 18px; }
+.btn--small { padding: 8px 14px; font-size: 14px; }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
 
 /* ---------- Choix disposition ---------- */
@@ -257,6 +258,36 @@ body {
 .result__stat b { display: block; font-size: 28px; }
 .result__stat span { color: var(--muted); font-size: 13px; }
 .result__actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+/* ---------- Crédits ---------- */
+.card--credits {
+  margin: auto;
+  width: min(600px, 92vw);
+  padding: 34px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+.card--credits .logo { text-align: center; font-size: 40px; }
+.credits__title { text-align: center; font-size: 26px; margin-bottom: 4px; }
+.credits__section h3 {
+  font-size: 13px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  margin-bottom: 4px;
+}
+.credits__section p { color: var(--text); }
+.credits__list { display: flex; flex-direction: column; gap: 4px; color: var(--muted); }
+.credits__list li::before { content: "• "; color: var(--primary-2); }
+.credits__note {
+  color: var(--muted);
+  font-size: 13px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.card--credits .btn { align-self: center; }
 
 @media (max-width: 560px) {
   .topbar__spacer { display: none; }

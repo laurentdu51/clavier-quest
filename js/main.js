@@ -16,6 +16,7 @@ const screens = {
   map: $("#screen-map"),
   game: $("#screen-game"),
   result: $("#screen-result"),
+  credits: $("#screen-credits"),
 };
 
 const engine = new TypingEngine();
@@ -73,6 +74,14 @@ $("#player-name").addEventListener("input", (e) => state.setProfile({ name: e.ta
 $("#btn-play").addEventListener("click", () => {
   renderMap();
   show("map");
+});
+
+/* ============================ CRÉDITS ============================ */
+
+$("#btn-credits").addEventListener("click", () => show("credits"));
+$("#btn-credits-back").addEventListener("click", () => {
+  renderHome();
+  show("home");
 });
 
 /* ============================ CARTE ============================ */
