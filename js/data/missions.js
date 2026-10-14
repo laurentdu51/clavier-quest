@@ -154,14 +154,16 @@ export function resolveItems(mission, layoutId) {
   return mission.items?.[layoutId] || [];
 }
 
+/** Une mission est débloquée si le total de points cumulés >= requiredPoints (approche B). */
+export function missionText(mission, layoutId) {
+  return resolveItems(mission, layoutId).join(" ");
+}
+
 export function isChapterUnlocked(chapterId, progress = {}) {
   if (chapterId === "letters") return true;
   const first = MISSIONS.find((m) => m.chapter === chapterId);
   return first ? isUnlocked(first.id, progress) : false;
 }
-
-
-/** Une mission est débloquée si le total de points cumulés >= requiredPoints (approche B). */
 export function isUnlocked(id, progress = {}) {
   const m = findMission(id);
   if (!m) return false;
