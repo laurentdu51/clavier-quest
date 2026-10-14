@@ -1,0 +1,29 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.code-workspace
+
+# Environnement / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Node (si outillage ajouté plus tard)
+node_modules/
+dist/
+.cache/
+
+# Déploiement : artefacts locaux éventuels
+*.tar
+*.tar.gz

@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kaniko-build-clavier-quest
+  namespace: registry
+spec:
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 600
+  template:
+    spec:
+      restartPolicy: Never
+      initContainers:
+        - name: prepare-context
+          image: alpine/git:latest
+          command:
+            - sh
+            - -c
+            - |
+              set -e
+              git clone --depth 1 \
+                ssh://git@192.168.1.240:32222/repos/clavier-quest.git /workspace
+          volumeMounts:
+            - name: workspace
+              mountPath: /workspace
+      containers:
+        - name: kaniko
+          image: gcr.io/kaniko-project/executor:latest
+          args:
+            - "--context=/workspace"
+            - "--dockerfile=/workspace/Dockerfile"
+            - "--destination=192.168.1.250:5000/clavier-quest:latest"
+            - "--insecure"
+            - "--insecure-pull"
+          volumeMounts:
+            - name: workspace
+              mountPath: /workspace
+      volumes:
+        - name: workspace
+          emptyDir: {}

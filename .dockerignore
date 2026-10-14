@@ -1,0 +1,26 @@
+# Git
+.git
+.gitignore
+
+# Docker / deploy (inutile dans l'image)
+Dockerfile
+.dockerignore
+docker-compose.yml
+kubernet/
+
+# Documentation
+*.md
+README*
+DEPLOY*
+
+# IDE / OS
+.vscode
+.idea
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Divers
+*.log
+node_modules/

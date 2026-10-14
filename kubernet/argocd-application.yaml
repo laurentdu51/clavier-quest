@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: clavier-quest
+  namespace: argocd
+spec:
+  destination:
+    namespace: clavier-quest
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: clavier-quest/kubernet
+    repoURL: ssh://root@192.168.1.240:32222/repos/k8s-manifests
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+      limit: 5
+    syncOptions:
+      - CreateNamespace=true
+  ignoreDifferences:
+    - group: networking.k8s.io
+      kind: Ingress
+      jsonPointers:
+        - /status

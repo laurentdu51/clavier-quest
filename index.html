@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clavier Quest</title>
+  <meta name="description" content="Apprends à taper au clavier en t'amusant, du plus simple au plus rapide.">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/keyboard.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ============ ACCUEIL ============ -->
+    <section id="screen-home" class="screen is-active">
+      <div class="card card--home">
+        <p class="logo">⌨️</p>
+        <h1 class="title">Clavier&nbsp;Quest</h1>
+        <p class="subtitle">Apprends à taper à la vitesse de l'éclair 🔥</p>
+
+        <div class="field">
+          <label>Choisis ton clavier</label>
+          <div class="layout-picker" id="layout-picker"></div>
+        </div>
+
+        <div class="field">
+          <label for="player-name">Ton nom</label>
+          <div class="name-row">
+            <input id="player-name" class="input" type="text" maxlength="16" placeholder="Jeune aventurier" autocomplete="off">
+            <div class="avatar-picker" id="avatar-picker"></div>
+          </div>
+        </div>
+
+        <button class="btn btn--primary btn--big" id="btn-play">Jouer ▶</button>
+      </div>
+    </section>
+
+    <!-- ============ CARTE DES MISSIONS ============ -->
+    <section id="screen-map" class="screen">
+      <header class="topbar">
+        <button class="btn btn--ghost" id="btn-map-home">← Accueil</button>
+        <h2 class="topbar__title">Choix du niveau</h2>
+        <div class="topbar__player" id="map-player"></div>
+      </header>
+      <div class="map" id="map"></div>
+    </section>
+
+    <!-- ============ JEU ============ -->
+    <section id="screen-game" class="screen">
+      <header class="topbar">
+        <button class="btn btn--ghost" id="btn-game-quit">✕ Quitter</button>
+        <h2 class="topbar__title" id="game-title">Mission</h2>
+        <div class="topbar__spacer"></div>
+      </header>
+
+      <div class="hud" id="hud"></div>
+
+      <div class="stage">
+        <div class="typing" id="typing" tabindex="0" aria-label="Zone de frappe"></div>
+      </div>
+
+      <div class="keyboard" id="keyboard"></div>
+      <p class="hand-hint" id="hand-hint"></p>
+      <p class="tip">Clique sur la zone de texte puis tape au clavier.</p>
+    </section>
+
+    <!-- ============ RÉSULTAT ============ -->
+    <section id="screen-result" class="screen">
+      <div class="card card--result">
+        <h2 class="result__title" id="result-title">Mission terminée&nbsp;!</h2>
+        <div class="stars" id="result-stars"></div>
+        <div class="result__stats" id="result-stats"></div>
+        <div class="result__actions">
+          <button class="btn btn--ghost" id="btn-replay">Rejouer</button>
+          <button class="btn btn--ghost" id="btn-result-map">Carte</button>
+          <button class="btn btn--primary" id="btn-next">Mission suivante ▶</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

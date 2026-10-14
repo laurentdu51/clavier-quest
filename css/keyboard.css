@@ -1,0 +1,51 @@
+.keyboard {
+  --k: clamp(28px, 4.6vw, 52px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  padding: 14px 10px 4px;
+  user-select: none;
+}
+.kb-row { display: flex; gap: 8px; }
+.kb-key {
+  width: var(--k);
+  height: var(--k);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-family: ui-monospace, monospace;
+  font-size: calc(var(--k) * .42);
+  color: #0d1020;
+  font-weight: 700;
+  position: relative;
+  background: #c9cfe6;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .28);
+  transition: transform .06s, box-shadow .06s, filter .1s;
+}
+.kb-key::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid rgba(0, 0, 0, .12);
+}
+.kb-key--home { box-shadow: 0 3px 0 rgba(0, 0, 0, .28), inset 0 -4px 0 rgba(0, 0, 0, .18); }
+.kb-key--next {
+  outline: 3px solid #fff;
+  filter: brightness(1.12);
+  transform: translateY(-1px) scale(1.04);
+}
+.kb-key--pressed { transform: translateY(3px); box-shadow: 0 0 0 rgba(0,0,0,.3); }
+.kb-key--good { background: var(--ok) !important; }
+.kb-key--bad { background: var(--error) !important; }
+.kb-key--wide { width: calc(var(--k) * 4); }
+.kb-key--space { width: calc(var(--k) * 8); }
+
+.kb-finger-dot {
+  position: absolute;
+  bottom: 4px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .45);
+}

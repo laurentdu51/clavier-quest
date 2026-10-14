@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clavier-quest
+  namespace: clavier-quest
+  labels:
+    app: clavier-quest
+    app.kubernetes.io/part-of: duhaz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clavier-quest
+  template:
+    metadata:
+      labels:
+        app: clavier-quest
+        app.kubernetes.io/part-of: duhaz
+    spec:
+      containers:
+        - name: nginx
+          image: 192.168.1.250:5000/clavier-quest:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 10
+
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/part-of: duhaz

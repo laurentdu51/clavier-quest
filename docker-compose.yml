@@ -1,0 +1,8 @@
+services:
+  web:
+    build: .
+    image: clavier-quest:latest
+    container_name: clavier-quest
+    restart: unless-stopped
+    ports:
+      - "8080:80"
