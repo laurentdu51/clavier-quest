@@ -11,20 +11,28 @@ spec:
       restartPolicy: Never
       initContainers:
         - name: prepare-context
-          image: alpine/git:latest
+          image: alpine/git:2.45.2
           command:
             - sh
             - -c
             - |
               set -e
+              mkdir -p /root/.ssh
+              cp /gitkey/id_ed25519 /root/.ssh/id_ed25519
+              chmod 600 /root/.ssh/id_ed25519
+              export GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_ed25519"
               git clone --depth 1 \
-                ssh://git@192.168.1.240:32222/repos/clavier-quest.git /workspace
+                ssh://root@192.168.1.240:32222/repos/clavier-quest /workspace
+              echo "Cloned HEAD: $(git -C /workspace rev-parse --short HEAD)"
           volumeMounts:
             - name: workspace
               mountPath: /workspace
+            - name: gitkey
+              mountPath: /gitkey
       containers:
         - name: kaniko
-          image: gcr.io/kaniko-project/executor:latest
+          image: gcr.io/kaniko-project/executor:debug
+          imagePullPolicy: IfNotPresent
           args:
             - "--context=/workspace"
             - "--dockerfile=/workspace/Dockerfile"
@@ -37,3 +45,7 @@ spec:
       volumes:
         - name: workspace
           emptyDir: {}
+        - name: gitkey
+          secret:
+            secretName: git-ssh-key
+            defaultMode: 0600
