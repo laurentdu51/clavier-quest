@@ -8,6 +8,11 @@ et ce projet suit le [versionnage sémantique](https://semver.org/lang/fr/).
 ## [Non publié]
 
 ### Ajouté
+- **Mode Défi** : une lettre à taper avant la fin d'un chrono qui se raccourcit
+  à chaque réussite (accélération progressive), fin de partie sur erreur ou
+  temps écoulé. Le choix des lettres s'élargit avec le niveau.
+- **Top des scores** du mode Défi : meilleurs scores sauvegardés localement,
+  affichage du rang et mise en avant d'un nouveau record.
 - Page « Crédits » accessible depuis l'accueil.
 - Fichier `CHANGELOG.md`.
 

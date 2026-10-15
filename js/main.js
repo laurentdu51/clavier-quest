@@ -2,12 +2,14 @@ import { $, el, clear, starRow } from "./utils/dom.js";
 import { state } from "./core/state.js";
 import { LAYOUTS, getLayout } from "./core/layout.js";
 import { TypingEngine } from "./core/engine.js";
+import { ChallengeEngine } from "./core/challenge.js";
 import { computeStars, computePoints } from "./core/stats.js";
-import { CHAPTERS } from "./data/curriculum.js";
+import { CHAPTERS, lettersFor } from "./data/curriculum.js";
 import * as Missions from "./data/missions.js";
 import { KeyboardView } from "./ui/keyboardView.js";
 import { Hud } from "./ui/hud.js";
 import { TypingView } from "./ui/typingView.js";
+import { ChallengeView } from "./ui/challengeView.js";
 
 const AVATARS = ["🦊", "🐱", "🐼", "🐸", "🐵", "🦉", "🐧", "🦄"];
 
@@ -16,13 +18,20 @@ const screens = {
   map: $("#screen-map"),
   game: $("#screen-game"),
   result: $("#screen-result"),
+  challenge: $("#screen-challenge"),
   credits: $("#screen-credits"),
 };
 
 const engine = new TypingEngine();
+const challenge = new ChallengeEngine();
 const keyboard = new KeyboardView($("#keyboard"));
 const hud = new Hud($("#hud"));
 const typing = new TypingView($("#typing"));
+const challengeView = new ChallengeView($("#challenge"), {
+  onStart: startChallenge,
+  onReplay: startChallenge,
+  onBack: goHome,
+});
 
 let currentMission = null;
 let lastResult = null;
@@ -30,6 +39,11 @@ let lastResult = null;
 function show(name) {
   Object.values(screens).forEach((s) => s.classList.remove("is-active"));
   screens[name].classList.add("is-active");
+}
+
+function goHome() {
+  renderHome();
+  show("home");
 }
 
 /* ============================ ACCUEIL ============================ */
@@ -75,6 +89,7 @@ $("#btn-play").addEventListener("click", () => {
   renderMap();
   show("map");
 });
+$("#btn-challenge").addEventListener("click", openChallenge);
 
 /* ============================ CRÉDITS ============================ */
 
@@ -201,15 +216,19 @@ function startRunnerPlaceholder() {
 }
 
 document.addEventListener("keydown", (e) => {
-  if (!screens.game.classList.contains("is-active")) return;
+  const inGame = screens.game.classList.contains("is-active");
+  const inChallenge = screens.challenge.classList.contains("is-active");
+  if (!inGame && !inChallenge) return;
   if (e.ctrlKey || e.metaKey || e.altKey) return;
   if (e.key === "Escape") {
-    quitMission();
+    if (inGame) quitMission();
+    else quitChallenge();
     return;
   }
   if (e.key.length !== 1) return; // ignore Shift, Backspace, Flèches…
   e.preventDefault();
-  engine.handleKey(e.key);
+  if (inChallenge) challenge.handleKey(e.key);
+  else engine.handleKey(e.key);
 });
 
 function quitMission() {
@@ -219,6 +238,69 @@ function quitMission() {
 }
 
 $("#btn-game-quit").addEventListener("click", quitMission);
+
+/* ============================ DÉFI ============================ */
+
+function openChallenge() {
+  renderChallengeIntro();
+  show("challenge");
+}
+
+function renderChallengeIntro() {
+  challengeView.showIntro({ top: state.scores, best: state.bestScore() });
+}
+
+function startChallenge() {
+  const layout = getLayout(state.layout);
+  challengeView.startPlay({ layout });
+  show("challenge");
+  challenge.start(lettersFor(state.layout));
+}
+
+function quitChallenge() {
+  challenge.abort();
+  goHome();
+}
+
+challenge.on("target", ({ char, stats }) => {
+  challengeView.setTarget(char);
+  challengeView.setStats(stats);
+});
+
+challenge.on("tick", ({ ratio }) => challengeView.setTimer(ratio));
+
+challenge.on("hit", ({ char, stats }) => {
+  challengeView.flash(char, true);
+  challengeView.setStats(stats);
+});
+
+challenge.on("gameover", (payload) => {
+  const { stats } = payload;
+  const entry = {
+    name: state.profile.name || "Anonyme",
+    avatar: state.profile.avatar,
+    score: stats.score,
+    streak: stats.maxStreak,
+    level: stats.level,
+    date: Date.now(),
+  };
+  const rank = stats.score > 0 ? state.recordScore(entry) : 0;
+
+  challengeView.flash(payload.got, false);
+  setTimeout(() => {
+    if (!screens.challenge.classList.contains("is-active")) return;
+    challengeView.showOver({
+      reason: payload.reason,
+      char: payload.char,
+      got: payload.got,
+      result: stats,
+      top: state.scores,
+      rank,
+    });
+  }, 260);
+});
+
+$("#btn-challenge-back").addEventListener("click", quitChallenge);
 
 /* ============================ RÉSULTAT ============================ */
 

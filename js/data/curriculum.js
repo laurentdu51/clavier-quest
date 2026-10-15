@@ -9,6 +9,12 @@ export const KEY_ORDER = {
   qwerty: ["f", "j", "g", "h", "d", "k", "s", "l", "a", ";", "e", "i", "r", "t", "y", "u", "q", "w", "o", "p", "v", "b", "n", "m", "c", "x", "z", ",", ".", "/"],
 };
 
+/** Lettres exploitables pour le mode Défi, dans l'ordre pédagogique. */
+export function lettersFor(layoutId) {
+  const order = KEY_ORDER[layoutId] || KEY_ORDER.azerty;
+  return order.filter((key) => /^[a-z]$/.test(key));
+}
+
 export const CHAPTERS = [
   { id: "letters", number: 1, title: "Les lettres", subtitle: "Découverte des touches, rangée par rangée" },
   { id: "syllables", number: 2, title: "Les syllabes", subtitle: "Enchaîne les lettres en petits morceaux" },

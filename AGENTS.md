@@ -21,7 +21,7 @@ au plus rapide : lettres → syllabes → mots → phrases. Toute l'interface es
 ## Project Structure
 
 ```
-index.html            — Squelette : 5 écrans (accueil, carte, jeu, résultat, crédits)
+index.html            — Squelette : 6 écrans (accueil, carte, jeu, défi, résultat, crédits)
 css/
   reset.css           — Reset minimal
   styles.css          — Thème, écrans, cartes, boutons, HUD, layout général
@@ -31,13 +31,15 @@ js/
   core/
     layout.js         — Claviers AZERTY/QWERTY + mapping touche→doigt→couleur
     engine.js         — Moteur de frappe (émet les événements du jeu)
+    challenge.js      — Moteur du mode Défi (chrono accéléré, série, score)
     stats.js          — WPM, précision, calcul des étoiles
-    state.js          — État applicatif (profil, réglages, progression)
+    state.js          — État applicatif (profil, réglages, progression, scores)
     storage.js        — Interface Storage + LocalStorageAdapter
   ui/
     keyboardView.js   — Rendu/animation du clavier virtuel
     hud.js            — Vitesse / précision / combo / progression
     typingView.js     — Texte cible colorié (pending/done/current/error)
+    challengeView.js  — Écrans du mode Défi (intro, jeu, fin) + top des scores
   data/
     curriculum.js     — Ordre d'apprentissage des touches + chapitres
     missions.js       — Contenu des missions + helpers (unlock, resolve…)
@@ -100,6 +102,14 @@ kubectl apply -k kubernet/
 > **Le futur « runner »** (personnage qui avance avec les réussites et tombe si
 > on rate) consommera **ces mêmes événements** sans refonte du moteur
 > (voir `startRunnerPlaceholder()` dans `main.js`). Ne pas casser ce contrat.
+
+### Mode Défi (`core/challenge.js`)
+`ChallengeEngine` est un moteur à part (une lettre cible, chrono qui se
+raccourcit à chaque réussite, fin sur erreur ou temps écoulé). Événements :
+`target` `{ char, level, budgetMs, stats }`, `tick` `{ remainingMs, ratio }`,
+`hit` `{ char, gained, stats }`, `gameover` `{ reason, char, got, stats }`.
+`ui/challengeView.js` les branche ; `main.js` enregistre le score dans le top
+local (`state.recordScore`). Le pool de lettres vient de `lettersFor(layout)`.
 
 ### Données de mission (`data/missions.js`)
 Une mission :

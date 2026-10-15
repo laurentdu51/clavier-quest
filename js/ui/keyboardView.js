@@ -7,10 +7,10 @@ function handOf(info) {
 }
 
 export class KeyboardView {
-  constructor(root) {
+  constructor(root, hintEl = document.getElementById("hand-hint")) {
     this.root = root;
     this.keyEls = new Map();
-    this.hintEl = document.getElementById("hand-hint");
+    this.hintEl = hintEl;
   }
 
   render(layout) {

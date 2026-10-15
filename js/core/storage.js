@@ -7,6 +7,7 @@ function defaultData() {
     profile: { name: "", avatar: "🦊" },
     settings: { layout: "azerty", sound: false, mode: "gentle" },
     progress: {},
+    scores: [],
   };
 }
 
@@ -20,7 +21,13 @@ export class LocalStorageAdapter {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return defaultData();
       const data = JSON.parse(raw);
-      return { ...defaultData(), ...data, settings: { ...defaultData().settings, ...data.settings } };
+      const base = defaultData();
+      return {
+        ...base,
+        ...data,
+        settings: { ...base.settings, ...data.settings },
+        scores: Array.isArray(data.scores) ? data.scores : base.scores,
+      };
     } catch (err) {
       console.warn("[storage] lecture impossible, réinitialisation.", err);
       return defaultData();

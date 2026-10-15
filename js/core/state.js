@@ -10,6 +10,7 @@ class State extends Emitter {
   get layout() { return this.data.settings.layout; }
   get profile() { return this.data.profile; }
   get settings() { return this.data.settings; }
+  get scores() { return this.data.scores || []; }
 
   setLayout(layout) {
     this.data.settings.layout = layout;
@@ -39,6 +40,20 @@ class State extends Emitter {
     this.persist();
     this.emit("progress", this.data.progress);
     return this.data.progress[id];
+  }
+
+  bestScore() {
+    return this.scores.reduce((max, s) => Math.max(max, s.score || 0), 0);
+  }
+
+  /** Insère un score de Défi, garde le top 10, renvoie le rang (1-based, 0 si hors top). */
+  recordScore(entry) {
+    const list = [...this.scores, entry].sort((a, b) => (b.score || 0) - (a.score || 0)).slice(0, 10);
+    const rank = list.indexOf(entry) + 1;
+    this.data.scores = list;
+    this.persist();
+    this.emit("scores", list);
+    return rank;
   }
 
   clearProgress() {
