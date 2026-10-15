@@ -227,7 +227,7 @@ $("#btn-game-quit").addEventListener("click", quitMission);
 
 function finishMission(stats) {
   const stars = computeStars(stats, currentMission);
-  const points = computePoints(stats, currentMission);
+  const points = computePoints({ ...stats, stars }, currentMission);
 
   state.recordMission(currentMission.id, {
     stars,
