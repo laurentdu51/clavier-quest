@@ -128,10 +128,7 @@ function renderMap() {
 
   const p = state.profile;
   $("#map-player").textContent = `${p.avatar} ${p.name || "Aventurier"}`;
-
-  const totalPts = Missions.totalPoints(state.data.progress);
-  const pointsEl = el("div", { class: "map-points", text: `Points totaux : ${totalPts} pts` });
-  $("#map-player").parentElement?.appendChild(pointsEl);
+  $("#map-points").textContent = `Points totaux : ${Missions.totalPoints(state.data.progress)} pts`;
   CHAPTERS.forEach((chapter) => {
     const missions = Missions.missionsByChapter(chapter.id);
     const section = el("section", { class: "chapter" });
