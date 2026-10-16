@@ -49,6 +49,55 @@ function goHome() {
 /* ============================ ACCUEIL ============================ */
 
 function renderHome() {
+  const slotPicker = $("#slot-picker");
+  clear(slotPicker);
+  state.slots.forEach((slot, i) => {
+    const btn = el("button", {
+      class:
+        "slot" +
+        (i === state.activeSlot ? " is-active" : "") +
+        (slot ? "" : " slot--empty"),
+      dataset: { slot: String(i) },
+      onclick: () => {
+        state.selectSlot(i);
+        renderHome();
+        if (!state.profile.name) $("#player-name").focus();
+      },
+    });
+    if (slot) {
+      btn.append(el("span", { class: "slot__avatar", text: slot.avatar || "🦊" }));
+      btn.append(el("span", { class: "slot__name", text: slot.name || "Aventurier" }));
+      btn.append(starRow(Missions.totalStars(slot.progress)));
+    } else {
+      btn.append(el("span", { class: "slot__plus", text: "＋" }));
+      btn.append(el("span", { class: "slot__name", text: "Nouveau" }));
+    }
+    slotPicker.append(btn);
+  });
+
+  const slotActions = $("#slot-actions");
+  clear(slotActions);
+  slotActions.append(
+    el("button", {
+      class: "btn btn--ghost btn--small",
+      text: "↺ Réinitialiser la progression",
+      onclick: () => {
+        if (!window.confirm("Remettre la progression de ce joueur à zéro ?")) return;
+        state.resetProgress();
+        renderHome();
+      },
+    }),
+    el("button", {
+      class: "btn btn--ghost btn--small",
+      text: "🗑 Supprimer ce joueur",
+      onclick: () => {
+        if (!window.confirm("Supprimer ce joueur et toute sa progression ?")) return;
+        state.deleteSlot(state.activeSlot);
+        renderHome();
+      },
+    })
+  );
+
   const picker = $("#layout-picker");
   clear(picker);
   Object.values(LAYOUTS).forEach((layout) => {
@@ -103,7 +152,7 @@ $("#btn-credits-back").addEventListener("click", () => {
 
 function missionCard(mission) {
   const progress = state.missionProgress(mission.id);
-  const unlocked = Missions.isUnlocked(mission.id, state.data.progress);
+  const unlocked = Missions.isUnlocked(mission.id, state.progress);
   const keys = Missions.resolveKeys(mission, state.layout);
 
   const card = el("button", {
@@ -143,7 +192,7 @@ function renderMap() {
 
   const p = state.profile;
   $("#map-player").textContent = `${p.avatar} ${p.name || "Aventurier"}`;
-  $("#map-points").textContent = `Points totaux : ${Missions.totalPoints(state.data.progress)} pts`;
+  $("#map-points").textContent = `Points totaux : ${Missions.totalPoints(state.progress)} pts`;
   CHAPTERS.forEach((chapter) => {
     const missions = Missions.missionsByChapter(chapter.id);
     const section = el("section", { class: "chapter" });

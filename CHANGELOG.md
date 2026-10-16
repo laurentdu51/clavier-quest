@@ -14,10 +14,24 @@ et ce projet suit le [versionnage sémantique](https://semver.org/lang/fr/).
 - **Top des scores** du mode Défi : meilleurs scores sauvegardés localement,
   affichage du rang et mise en avant d'un nouveau record.
 - **Compte à rebours 3-2-1-GO !** avant chaque début de partie de Défi.
+- **Joueurs (4 slots)** : jusqu'à 4 profils mémorisés sur l'accueil (nom, avatar
+  et progression propres à chacun). Clic sur un slot pour basculer
+  (« switch rapide »), clic sur un emplacement libre pour créer un joueur neuf
+  repartant de zéro, boutons **Réinitialiser la progression** et **Supprimer ce
+  joueur** (avec confirmation).
+- **Migration automatique** du stockage v1 (profil unique) vers v2 (4 slots) :
+  le nom, l'avatar et la progression existants deviennent le joueur 1 ; aucun
+  score ni réglage perdu.
 - Page « Crédits » accessible depuis l'accueil.
 - Fichier `CHANGELOG.md`.
 
 ### Modifié
+- **Renommer un joueur ne réinitialise plus rien** : le nom est une simple
+  étiquette du slot actif. Pour repartir de zéro, on crée ou on sélectionne un
+  autre slot (ou on réinitialise la progression du joueur courant).
+- **Modèle de stockage v2** : la progression des missions est par joueur
+  (`data.slots[i].progress`) ; le **Top du mode Défi reste global** et les
+  réglages (disposition AZERTY/QWERTY, son) restent globaux à la machine.
 - **Équilibrage du mode Défi** : chrono de départ plus doux (6 s par lettre,
   soit ~5–8 s au début) et accélération plus progressive (‑100 ms/réussite,
   plancher 0,6 s).

@@ -149,6 +149,28 @@ indices de main en découlent automatiquement.
 `core/state.js` l'utilise. Pour brancher un backend plus tard : créer un nouvel
 adapter avec la même interface, sans toucher au reste.
 
+**Modèle v2 — joueurs (4 slots)** : jusqu'à 4 profils sur l'accueil
+(`index.html` « Joueurs »), chacun avec son nom, avatar et progression :
+
+```js
+{
+  version: 2,
+  settings: { layout, sound, mode },   // global (disposition, son…)
+  activeSlot: 0,                        // index 0..3
+  slots: [ { name, avatar, progress: {} }, null, null, null ],  // null = libre
+  scores: [],                           // Top du mode Défi : GLOBAL
+}
+```
+
+- `progress` est **par slot** ; `scores` (Défi) et `settings` sont **globaux**.
+- `storage.load()` **migre automatiquement** la v1 (profil unique) vers la v2
+  (`migrateV1()` : le profil/progression existant devient le slot 0).
+- Toujours passer par les getters de `state` (`profile`, `progress`, `scores`,
+  `slots`, `activeSlot`) et non par `state.data` en direct.
+- API slots : `selectSlot(i)` (basculer), `createSlot(i)` (joueur neuf),
+  `resetProgress()` (slot actif), `deleteSlot(i)` (libère, recrée un slot vide
+  si tout est supprimé). Le renommage **ne** réinitialise **rien**.
+
 ## Testing
 
 - Pas de framework de test. Vérifications manuelles :

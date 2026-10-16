@@ -120,6 +120,14 @@ export function totalPoints(progress = {}) {
   return sum;
 }
 
+export function totalStars(progress = {}) {
+  let sum = 0;
+  for (const m of MISSIONS) {
+    sum += progress?.[m.id]?.stars || 0;
+  }
+  return sum;
+}
+
 export function chapterCompletedCount(chapterId, progress = {}) {
   return missionsByChapter(chapterId).filter((m) => progress?.[m.id]?.completed).length;
 }

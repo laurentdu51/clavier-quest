@@ -131,6 +131,40 @@ body {
 }
 .avatar-option.is-selected { border-color: var(--accent); background: rgba(0, 210, 168, .12); }
 
+/* ---------- Joueurs (slots) ---------- */
+.slot-picker { display: flex; flex-wrap: wrap; gap: 8px; }
+.slot {
+  flex: 1 1 calc(50% - 4px);
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  background: var(--panel-2);
+  text-align: left;
+  color: var(--text);
+  font-weight: 600;
+  transition: border-color .15s, background .15s;
+}
+.slot:hover { border-color: var(--primary-2); }
+.slot.is-active { border-color: var(--accent); background: rgba(0, 210, 168, .12); }
+.slot--empty { color: var(--muted); border-style: dashed; font-weight: 500; }
+.slot__avatar { font-size: 22px; line-height: 1; }
+.slot__plus { font-size: 18px; line-height: 1; }
+.slot__name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.slot .stars-row { flex: none; font-size: 12px; }
+.slot-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.slot-actions .btn { flex: 1 1 auto; }
+
 /* ---------- Topbar ---------- */
 .topbar {
   display: flex;
