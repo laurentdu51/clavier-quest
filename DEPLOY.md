@@ -122,6 +122,11 @@ correspondant dans `haproxy-deployment.yaml` (voir la méthode HAProxy du dépô
    kubectl -n clavier-quest rollout restart deploy/clavier-quest
    ```
 
+> **Cache navigateur** : `nginx.conf` sert les assets en `no-cache` (revalidation
+> via ETag) pour éviter de servir un ancien `js/main.js` après un déploiement.
+> Les références d'assets dans `index.html` portent un paramètre `?v=x.y.z` :
+> **à incrémenter à chaque release** si un navigateur garde une entrée en cache.
+
 ## 6. Endpoint de santé
 
 `GET /healthz` → `200 ok` (utilisé par les probes `livenessProbe` /
