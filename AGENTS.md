@@ -171,10 +171,55 @@ Voir **`DEPLOY.md`** pour la procédure complète. En résumé :
 - Pas de DB, pas de volume, pas de secret (site 100% statique, progression locale).
 - Santé : `GET /healthz` → `200 ok`.
 
+### Déployer depuis l'environnement agent (à utiliser par défaut)
+
+L'agent tourne **dans le cluster** avec un service account (`agent-tim:default`)
+**restreint** : les droits kubectl/cluster passent par un kubeconfig dédié, et
+`docker` n'est pas disponible. Toujours utiliser les chemins ci-dessous.
+
+```bash
+KUBECTL="/mnt/nas_share/Projets/my_kub/kubectl"
+KUBECONFIG="/mnt/nas_share/Projets/my_kub/kubeconfig"
+$KUBECTL --kubeconfig "$KUBECONFIG" -n clavier-quest get deploy,pods,svc
+```
+
+Clé SSH git (accès `root@` au dépôt) : `/tmp/opencode/argocd_k8s_key`.
+Le remote `origin` pointe déjà sur `ssh://root@192.168.1.240:32222/repos/clavier-quest`.
+Si la clé est absente/inutilisable, la régénérer ou demander à l'utilisateur.
+
+**Environnement de test** : http://192.168.1.240:30090 (NodePort sur tous les
+nœuds). ArgoCD App `clavier-quest` (ns `argocd`), manifests versionnés dans le
+dépôt `k8s-manifests` → `clavier-quest/kubernet/`.
+
+**Boucle de mise à jour** (après commit + push sur `main`) :
+
+```bash
+# 1. Builder l'image dans le cluster (kaniko, ns registry)
+$KUBECTL --kubeconfig "$KUBECONFIG" -n registry delete job kaniko-build-clavier-quest --ignore-not-found
+$KUBECTL --kubeconfig "$KUBECONFIG" -n registry apply -f kubernet/kaniko-job.yaml
+#    attendre ~45 s puis vérifier :
+$KUBECTL --kubeconfig "$KUBECONFIG" -n registry logs -l job-name=kaniko-build-clavier-quest --all-containers --tail=4
+
+# 2. Tirer le nouvel image `latest`
+$KUBECTL --kubeconfig "$KUBECONFIG" -n clavier-quest rollout restart deploy/clavier-quest
+$KUBECTL --kubeconfig "$KUBECONFIG" -n clavier-quest rollout status deploy/clavier-quest --timeout=60s
+$KUBECTL --kubeconfig "$KUBECONFIG" -n registry delete job kaniko-build-clavier-quest --ignore-not-found
+
+# 3. Vérifier ce qui est réellement servi
+curl -s http://192.168.1.240:30090/ | grep -o 'styles.css?v=[0-9.]*'
+```
+
+> Le job kaniko clone `main` du dépôt : **pousser avant de le lancer**.
+> Le déploiement utilise `:latest` + `imagePullPolicy: Always` → le
+> `rollout restart` est obligatoire pour prendre la nouvelle image.
+> Penser à **incrémenter `?v=x.y.z`** dans `index.html` à chaque release
+> (cache navigateur).
+
 ## Git
 
 - Branche principale : `main`. Auteur local : `OpenCode <opencode@duhaz.fr>`.
-- Remote : `ssh://git@192.168.1.240:32222/repos/clavier-quest.git` (Gitea).
+- Remote : `ssh://root@192.168.1.240:32222/repos/clavier-quest` (Gitea) —
+  clé `/tmp/opencode/argocd_k8s_key` (voir « Deployment »).
 - Style de commit : `feat:`, `fix:`, `chore:`, `docs:` (messages concis).
 - Ne committer que ce qui est voulu ; jamais de secrets.
 
