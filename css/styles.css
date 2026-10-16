@@ -364,6 +364,7 @@ body {
 .challenge__stats { display: flex; gap: 12px; width: 100%; }
 .challenge__stats .stat { flex: 1; text-align: center; }
 .challenge__area {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -386,6 +387,30 @@ body {
 .challenge__letter.is-pop { animation: letter-pop .18s ease-out; }
 @keyframes letter-pop {
   0% { transform: scale(.6); opacity: .4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Compte à rebours avant la première lettre */
+.challenge__count {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(72px, 20vw, 150px);
+  font-weight: 800;
+  color: var(--gold);
+  text-shadow: 0 0 34px rgba(255, 210, 63, .55);
+  background: rgba(15, 18, 38, .94);
+  border-radius: var(--radius);
+  z-index: 2;
+  pointer-events: none;
+}
+.challenge__count.is-on { display: flex; }
+.challenge__count.is-pop { animation: count-pop .32s ease-out; }
+@keyframes count-pop {
+  0% { transform: scale(.35); opacity: 0; }
+  55% { transform: scale(1.12); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
 .challenge__bar {

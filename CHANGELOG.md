@@ -13,8 +13,14 @@ et ce projet suit le [versionnage sémantique](https://semver.org/lang/fr/).
   temps écoulé. Le choix des lettres s'élargit avec le niveau.
 - **Top des scores** du mode Défi : meilleurs scores sauvegardés localement,
   affichage du rang et mise en avant d'un nouveau record.
+- **Compte à rebours 3-2-1-GO !** avant chaque début de partie de Défi.
 - Page « Crédits » accessible depuis l'accueil.
 - Fichier `CHANGELOG.md`.
+
+### Corrigé
+- **Cache navigateur** : nginx sert désormais les assets en `no-cache`
+  (revalidation ETag) et les assets sont versionnés (`?v=`) dans `index.html`,
+  pour éviter de servir un ancien `js/main.js` après un déploiement.
 
 ## [0.1.0] — 2026-10-14
 

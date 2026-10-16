@@ -19,6 +19,7 @@ export class ChallengeView {
   constructor(root, handlers = {}) {
     this.root = root;
     this.handlers = handlers;
+    this._countId = null;
   }
 
   topList(top, highlightRank = 0) {
@@ -54,6 +55,7 @@ export class ChallengeView {
   }
 
   startPlay({ layout }) {
+    this.cancelCountdown();
     clear(this.root);
 
     this.score = statTile("Score");
@@ -63,7 +65,9 @@ export class ChallengeView {
 
     this.letterEl = el("div", { class: "challenge__letter", text: "" });
     this.barFill = el("div", { class: "challenge__bar-fill" });
+    this.countEl = el("div", { class: "challenge__count" });
     const area = el("div", { class: "challenge__area" }, [
+      this.countEl,
       this.letterEl,
       el("div", { class: "challenge__bar" }, [this.barFill]),
     ]);
@@ -79,6 +83,49 @@ export class ChallengeView {
 
     this.keyboard = new KeyboardView(kbRoot, null);
     this.keyboard.render(layout);
+  }
+
+  /** Compte à rebours 3-2-1-GO ! avant la première lettre, puis appelle `onDone`. */
+  playCountdown(onDone) {
+    this.cancelCountdown();
+    if (!this.countEl) {
+      onDone?.();
+      return;
+    }
+    this.countEl.classList.add("is-on");
+    const steps = [
+      ["3", 750],
+      ["2", 750],
+      ["1", 750],
+      ["GO !", 450],
+    ];
+    let i = 0;
+    const next = () => {
+      if (i >= steps.length) {
+        this._countId = null;
+        this.countEl.classList.remove("is-on");
+        onDone?.();
+        return;
+      }
+      const [text, delay] = steps[i++];
+      this.countEl.textContent = text;
+      this.countEl.classList.remove("is-pop");
+      void this.countEl.offsetWidth;
+      this.countEl.classList.add("is-pop");
+      this._countId = setTimeout(next, delay);
+    };
+    next();
+  }
+
+  cancelCountdown() {
+    if (this._countId != null) {
+      clearTimeout(this._countId);
+      this._countId = null;
+    }
+    if (this.countEl) {
+      this.countEl.classList.remove("is-on", "is-pop");
+      this.countEl.textContent = "";
+    }
   }
 
   setTarget(char) {

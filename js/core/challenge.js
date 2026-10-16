@@ -7,9 +7,9 @@ import { Emitter } from "../utils/emitter.js";
  * Le choix des lettres s'élargit lui aussi avec le niveau.
  */
 export const CHALLENGE = {
-  startMs: 2200,
-  minMs: 450,
-  stepMs: 70,
+  startMs: 3000,
+  minMs: 500,
+  stepMs: 60,
   baseLetters: 10,
   unlockEvery: 3,
 };

@@ -254,10 +254,11 @@ function startChallenge() {
   const layout = getLayout(state.layout);
   challengeView.startPlay({ layout });
   show("challenge");
-  challenge.start(lettersFor(state.layout));
+  challengeView.playCountdown(() => challenge.start(lettersFor(state.layout)));
 }
 
 function quitChallenge() {
+  challengeView.cancelCountdown();
   challenge.abort();
   goHome();
 }
