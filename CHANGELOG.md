@@ -7,6 +7,11 @@ et ce projet suit le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+## [0.2.0] — 2026-10-16
+
+Version « Joueurs » et « Défi de vitesse » : mode d'entraînement chronométré,
+top des scores et jusqu'à 4 profils mémorisés localement.
+
 ### Ajouté
 - **Mode Défi** : une lettre à taper avant la fin d'un chrono qui se raccourcit
   à chaque réussite (accélération progressive), fin de partie sur erreur ou
@@ -22,8 +27,11 @@ et ce projet suit le [versionnage sémantique](https://semver.org/lang/fr/).
 - **Migration automatique** du stockage v1 (profil unique) vers v2 (4 slots) :
   le nom, l'avatar et la progression existants deviennent le joueur 1 ; aucun
   score ni réglage perdu.
+- **Système de points cumulés** : chaque mission rapporte des points (étoiles +
+  bonus de vitesse), cumulés par joueur et utilisés pour débloquer les missions
+  suivantes.
 - Page « Crédits » accessible depuis l'accueil.
-- Fichier `CHANGELOG.md`.
+- Fichier `CHANGELOG.md` et documentation agent `AGENTS.md`.
 
 ### Modifié
 - **Renommer un joueur ne réinitialise plus rien** : le nom est une simple
@@ -39,9 +47,19 @@ et ce projet suit le [versionnage sémantique](https://semver.org/lang/fr/).
   et fenêtre anti-répétition (aucune lettre ne revient avant 5 tirages).
 
 ### Corrigé
+- **Déblocage des missions** : les étoiles n'étaient pas transmises à
+  `computePoints()`, si bien qu'une mission à 3 étoiles ne rapportait que le
+  bonus de vitesse et ne débloquait jamais la suivante.
+- **Carte des missions** : le total de points s'affichait plusieurs fois dans la
+  barre du haut (un `<div>` ajouté à chaque rendu sans jamais être retiré).
+- **Accueil** : la liste des avatars débordait du cadre de choix du nom.
+- **Missions** : restauration de `missionText()` / `isChapterUnlocked()`,
+  éliminant l'erreur « Missions.missionText is not a function ».
 - **Cache navigateur** : nginx sert désormais les assets en `no-cache`
   (revalidation ETag) et les assets sont versionnés (`?v=`) dans `index.html`,
   pour éviter de servir un ancien `js/main.js` après un déploiement.
+- **Build (infra)** : le job kaniko ne clonait pas le dépôt (mauvaise URL et
+  clé SSH absente) ; il clone désormais en `root@` avec la clé montée.
 
 ## [0.1.0] — 2026-10-14
 
@@ -68,4 +86,5 @@ Premier socle jouable, « Étape 1 ».
 - **Documentation** : `README.md`, `AGENTS.md`, `DEPLOY.md`.
 
 [Non publié]: https://192.168.1.240:32222/repos/clavier-quest
+[0.2.0]: https://192.168.1.240:32222/repos/clavier-quest
 [0.1.0]: https://192.168.1.240:32222/repos/clavier-quest
