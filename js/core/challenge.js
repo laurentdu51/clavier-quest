@@ -7,11 +7,12 @@ import { Emitter } from "../utils/emitter.js";
  * Le choix des lettres s'élargit lui aussi avec le niveau.
  */
 export const CHALLENGE = {
-  startMs: 3000,
-  minMs: 500,
-  stepMs: 60,
-  baseLetters: 10,
-  unlockEvery: 3,
+  startMs: 6000,
+  minMs: 600,
+  stepMs: 100,
+  baseLetters: 20,
+  unlockEvery: 2,
+  recentWindow: 5,
 };
 
 const now = () =>
@@ -53,6 +54,7 @@ export class ChallengeEngine extends Emitter {
     this.budgetMs = 0;
     this.startedAt = 0;
     this._tickId = null;
+    this._recent = [];
   }
 
   start(pool = []) {
@@ -80,10 +82,13 @@ export class ChallengeEngine extends Emitter {
 
   _pick() {
     const choices = this.pool.slice(0, this.unlockedCount);
-    let char = choices[Math.floor(Math.random() * choices.length)];
-    if (choices.length > 1 && char === this.target) {
-      char = choices[(choices.indexOf(char) + 1) % choices.length];
-    }
+    if (choices.length === 1) return choices[0];
+    const window = Math.min(CHALLENGE.recentWindow, choices.length - 1);
+    const recent = this._recent.slice(0, window);
+    let candidates = choices.filter((c) => !recent.includes(c));
+    if (!candidates.length) candidates = choices;
+    const char = candidates[Math.floor(Math.random() * candidates.length)];
+    this._recent = [char, ...this._recent].slice(0, CHALLENGE.recentWindow);
     return char;
   }
 

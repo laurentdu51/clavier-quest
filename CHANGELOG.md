@@ -17,6 +17,13 @@ et ce projet suit le [versionnage sémantique](https://semver.org/lang/fr/).
 - Page « Crédits » accessible depuis l'accueil.
 - Fichier `CHANGELOG.md`.
 
+### Modifié
+- **Équilibrage du mode Défi** : chrono de départ plus doux (6 s par lettre,
+  soit ~5–8 s au début) et accélération plus progressive (‑100 ms/réussite,
+  plancher 0,6 s).
+- **Plus de variété dans les lettres** du Défi : pool initial élargi (20 lettres)
+  et fenêtre anti-répétition (aucune lettre ne revient avant 5 tirages).
+
 ### Corrigé
 - **Cache navigateur** : nginx sert désormais les assets en `no-cache`
   (revalidation ETag) et les assets sont versionnés (`?v=`) dans `index.html`,
