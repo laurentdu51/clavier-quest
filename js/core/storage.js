@@ -11,7 +11,7 @@ function defaultData() {
   slots[0] = emptySlot();
   return {
     version: VERSION,
-    settings: { layout: "azerty", sound: false, mode: "gentle" },
+    settings: { layout: "azerty", sound: false, mode: "gentle", legalConsent: false },
     activeSlot: 0,
     slots,
     scores: [],

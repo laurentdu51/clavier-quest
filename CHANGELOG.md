@@ -7,6 +7,28 @@ et ce projet suit le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+## [0.3.0] — 2026-10-16
+
+Version « Mise en production » : passage en HTTPS sur
+`clavier-quest.duhaz.fr`, obligations légales et référencement.
+
+### Ajouté
+- **Informations légales** accessibles depuis l'accueil (liens en pied de page) :
+  **Mentions légales** (éditeur, directeur de la publication, hébergement),
+  **Politique de confidentialité** (RGPD, données locales, droits de l'utilisateur)
+  et **Cookies & stockage local**.
+- **Bandeau d'information** sur le stockage local, affiché à la première visite
+  et mémorisé après validation (aucun cookie utilisé, aucun consentement requis).
+- **Référencement (SEO)** : balises `description`, `robots`, `canonical`,
+  `theme-color`, **Open Graph** et **Twitter Card**, données structurées
+  **JSON-LD** (`WebApplication`), `favicon.svg`, `og-image.svg`,
+  `robots.txt` et `sitemap.xml`.
+- **Déploiement en production** : Ingress Traefik hébergé derrière HAProxy
+  avec certificat Let's Encrypt (`clavier-quest.duhaz.fr`).
+
+### Modifié
+- Version des ressources passée à `?v=0.3.0` (cache navigateur).
+
 ## [0.2.0] — 2026-10-16
 
 Version « Joueurs » et « Défi de vitesse » : mode d'entraînement chronométré,

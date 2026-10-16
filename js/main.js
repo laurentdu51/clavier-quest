@@ -20,6 +20,7 @@ const screens = {
   result: $("#screen-result"),
   challenge: $("#screen-challenge"),
   credits: $("#screen-credits"),
+  legal: $("#screen-legal"),
 };
 
 const engine = new TypingEngine();
@@ -146,6 +147,37 @@ $("#btn-credits").addEventListener("click", () => show("credits"));
 $("#btn-credits-back").addEventListener("click", () => {
   renderHome();
   show("home");
+});
+
+/* ============================ INFORMATIONS LÉGALES ============================ */
+
+const LEGAL_TITLES = {
+  mentions: "Mentions légales",
+  confidentialite: "Politique de confidentialité",
+  cookies: "Cookies & stockage local",
+};
+
+function openLegal(section) {
+  show("legal");
+  $("#legal-title").textContent = LEGAL_TITLES[section] || "Informations légales";
+  const target = section ? document.getElementById("legal-" + section) : null;
+  if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  else screens.legal.scrollTop = 0;
+}
+
+document.querySelectorAll("[data-legal]").forEach((btn) => {
+  btn.addEventListener("click", () => openLegal(btn.dataset.legal));
+});
+$("#btn-legal-back").addEventListener("click", goHome);
+$("#btn-legal-home").addEventListener("click", goHome);
+
+/* ============================ BANDEAU STOCKAGE LOCAL ============================ */
+
+const cookieNotice = $("#cookie-notice");
+if (!state.legalConsent) cookieNotice.hidden = false;
+$("#cookie-accept").addEventListener("click", () => {
+  state.acceptLegal();
+  cookieNotice.hidden = true;
 });
 
 /* ============================ CARTE ============================ */

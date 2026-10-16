@@ -3,11 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clavier Quest</title>
-  <meta name="description" content="Apprends à taper au clavier en t'amusant, du plus simple au plus rapide.">
-  <link rel="stylesheet" href="css/reset.css?v=0.2.4">
-  <link rel="stylesheet" href="css/styles.css?v=0.2.4">
-  <link rel="stylesheet" href="css/keyboard.css?v=0.2.4">
+  <title>Clavier Quest — Apprendre la frappe au clavier en jouant</title>
+  <meta name="description" content="Clavier Quest : un jeu web gratuit pour apprendre à taper au clavier (AZERTY &amp; QWERTY), des lettres aux phrases. Missions guidées, défi de vitesse, 100% sans compte.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Duhaz">
+  <meta name="theme-color" content="#0f1226">
+  <link rel="canonical" href="https://clavier-quest.duhaz.fr/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon.svg">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Clavier Quest">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://clavier-quest.duhaz.fr/">
+  <meta property="og:title" content="Clavier Quest — Apprendre la frappe au clavier en jouant">
+  <meta property="og:description" content="Apprends à taper au clavier en t'amusant : missions guidées, défi de vitesse, progression sauvegardée localement.">
+  <meta property="og:image" content="https://clavier-quest.duhaz.fr/og-image.svg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Clavier Quest — Apprendre la frappe au clavier en jouant">
+  <meta name="twitter:description" content="Apprends à taper au clavier en t'amusant : missions guidées, défi de vitesse, progression sauvegardée localement.">
+  <meta name="twitter:image" content="https://clavier-quest.duhaz.fr/og-image.svg">
+
+  <link rel="stylesheet" href="css/reset.css?v=0.3.0">
+  <link rel="stylesheet" href="css/styles.css?v=0.3.0">
+  <link rel="stylesheet" href="css/keyboard.css?v=0.3.0">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Clavier Quest",
+    "url": "https://clavier-quest.duhaz.fr/",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "fr",
+    "isAccessibleForFree": true,
+    "description": "Jeu web gratuit pour apprendre la frappe au clavier (AZERTY & QWERTY), des lettres aux phrases.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "author": { "@type": "Organization", "name": "Duhaz" }
+  }
+  </script>
 </head>
 <body>
   <div id="app">
@@ -41,6 +79,12 @@
         <button class="btn btn--primary btn--big" id="btn-play">Jouer ▶</button>
         <button class="btn btn--ghost" id="btn-challenge">Défi de vitesse ⚡</button>
         <button class="btn btn--ghost btn--small" id="btn-credits">Crédits</button>
+
+        <nav class="site-links" aria-label="Informations">
+          <button class="link" data-legal="mentions">Mentions légales</button>
+          <button class="link" data-legal="confidentialite">Confidentialité</button>
+          <button class="link" data-legal="cookies">Cookies &amp; stockage</button>
+        </nav>
       </div>
     </section>
 
@@ -126,7 +170,7 @@
 
         <div class="credits__section">
           <h3>Version</h3>
-          <p id="credits-version">v0.2.0 — « Joueurs &amp; Défi »</p>
+          <p id="credits-version">v0.3.0 — « Mise en production »</p>
         </div>
 
         <p class="credits__note">Zéro dépendance externe — la progression est sauvegardée localement dans ton navigateur.</p>
@@ -135,8 +179,85 @@
       </div>
     </section>
 
+    <!-- ============ INFORMATIONS LÉGALES ============ -->
+    <section id="screen-legal" class="screen">
+      <header class="topbar">
+        <button class="btn btn--ghost" id="btn-legal-back">← Accueil</button>
+        <h2 class="topbar__title" id="legal-title">Informations légales</h2>
+        <div class="topbar__spacer"></div>
+      </header>
+
+      <div class="legal">
+
+        <section class="legal__block" id="legal-mentions">
+          <h3>Mentions légales</h3>
+          <p>Conformément à l'article 6 III de la loi n°&nbsp;2004-575 du 21 juin 2004 pour la confiance dans
+            l'économie numérique (LCEN), voici les informations relatives à l'éditeur et à l'hébergeur du site.</p>
+          <dl class="legal__dl">
+            <dt>Éditeur du site</dt>
+            <dd>Duhaz — projet personnel à but non lucratif.<br>Contact&nbsp;: <a href="mailto:contact@duhaz.fr">contact@duhaz.fr</a></dd>
+            <dt>Directeur de la publication</dt>
+            <dd>Le responsable du projet Duhaz.</dd>
+            <dt>Hébergement</dt>
+            <dd>Infrastructure auto-hébergée (serveur privé), accessible depuis
+              <a href="https://clavier-quest.duhaz.fr/">clavier-quest.duhaz.fr</a>.</dd>
+            <dt>Nature du service</dt>
+            <dd>Jeu éducatif gratuit d'apprentissage de la frappe au clavier. Aucune donnée n'est
+              collectée sur un serveur&nbsp;: il s'agit d'un site entièrement statique.</dd>
+          </dl>
+        </section>
+
+        <section class="legal__block" id="legal-confidentialite">
+          <h3>Politique de confidentialité</h3>
+          <p>Clavier&nbsp;Quest respecte ta vie privée. Le jeu <strong>ne collecte, ne transmet et
+            ne stocke aucune donnée personnelle sur un serveur</strong>. Il n'y a ni compte, ni
+            formulaire d'inscription, ni outil de mesure d'audience.</p>
+          <h4>Données enregistrées dans ton navigateur</h4>
+          <p>Pour fonctionner, le jeu enregistre localement, dans le <em>stockage local</em>
+            (<code>localStorage</code>) de ton navigateur, et uniquement sur ton appareil&nbsp;:</p>
+          <ul class="legal__list">
+            <li>le prénom ou pseudo saisi (jusqu'à 4 joueurs)&nbsp;;</li>
+            <li>l'avatar choisi&nbsp;;</li>
+            <li>la progression (missions, étoiles, points) et les scores du mode Défi&nbsp;;</li>
+            <li>la disposition du clavier (AZERTY/QWERTY) et les réglages.</li>
+          </ul>
+          <p>Ces informations ne quittent jamais ton appareil et ne sont accessibles par personne d'autre.
+            Elles sont conservées jusqu'à ce que tu les supprimes.</p>
+          <h4>Tes droits (RGPD)</h4>
+          <p>Ces données étant exclusivement locales, tu en gardes le contrôle total&nbsp;:</p>
+          <ul class="legal__list">
+            <li><strong>Effacement</strong>&nbsp;: bouton « Supprimer ce joueur » sur l'accueil, ou effacement des
+              données du site dans les réglages de ton navigateur.</li>
+            <li><strong>Accès / rectification</strong>&nbsp;: les informations sont visibles et modifiables directement
+              dans le jeu (nom, avatar, réinitialisation de la progression).</li>
+          </ul>
+          <p>Pour toute question&nbsp;: <a href="mailto:contact@duhaz.fr">contact@duhaz.fr</a>.</p>
+        </section>
+
+        <section class="legal__block" id="legal-cookies">
+          <h3>Cookies &amp; stockage local</h3>
+          <p>Clavier&nbsp;Quest <strong>n'utilise aucun cookie</strong>&nbsp;: ni cookie publicitaire, ni cookie
+            de mesure d'audience, ni cookie tiers.</p>
+          <p>Le jeu utilise uniquement le <strong>stockage local</strong> (<code>localStorage</code>) du navigateur,
+            une technologie strictement nécessaire à son fonctionnement (mémoriser les joueurs et la progression).
+            À ce titre, il ne requiert pas de consentement préalable, mais tu peux le vider à tout moment via les
+            réglages de ton navigateur — le jeu repartira alors de zéro.</p>
+        </section>
+
+        <button class="btn btn--primary" id="btn-legal-home">← Accueil</button>
+      </div>
+    </section>
+
   </div>
 
-  <script type="module" src="js/main.js?v=0.2.4"></script>
+  <aside class="cookie-notice" id="cookie-notice" hidden aria-label="Information sur le stockage local">
+    <p><strong>Aucun cookie publicitaire.</strong> Ta progression est enregistrée uniquement dans ton
+      navigateur (stockage local).
+      <button class="link" data-legal="cookies">En savoir plus</button>
+    </p>
+    <button class="btn btn--primary btn--small" id="cookie-accept">J'ai compris</button>
+  </aside>
+
+  <script type="module" src="js/main.js?v=0.3.0"></script>
 </body>
 </html>

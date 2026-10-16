@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Clavier Quest">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1e42"/>
+      <stop offset="1" stop-color="#0f1226"/>
+    </linearGradient>
+    <linearGradient id="key" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8b7bff"/>
+      <stop offset="1" stop-color="#6c5ce7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="180" cy="90" r="260" fill="#2a2260" opacity="0.5"/>
+  <circle cx="1050" cy="560" r="300" fill="#12325a" opacity="0.5"/>
+  <text x="600" y="300" text-anchor="middle" font-family="Segoe UI, Roboto, Arial, sans-serif"
+        font-size="96" font-weight="800" fill="#ffffff">Clavier Quest</text>
+  <text x="600" y="372" text-anchor="middle" font-family="Segoe UI, Roboto, Arial, sans-serif"
+        font-size="36" fill="#9aa2d4">Apprends à taper au clavier en jouant</text>
+  <g transform="translate(420,430)">
+    <g fill="url(#key)">
+      <rect x="0" y="0" width="56" height="56" rx="12"/>
+      <rect x="68" y="0" width="56" height="56" rx="12"/>
+      <rect x="136" y="0" width="56" height="56" rx="12"/>
+      <rect x="204" y="0" width="56" height="56" rx="12"/>
+      <rect x="272" y="0" width="56" height="56" rx="12"/>
+    </g>
+    <g fill="#00d2a8">
+      <rect x="34" y="86" width="240" height="40" rx="12"/>
+    </g>
+    <text x="154" y="114" text-anchor="middle" font-family="Segoe UI, Roboto, Arial, sans-serif"
+          font-size="24" font-weight="700" fill="#0f1226">JOUER</text>
+  </g>
+</svg>

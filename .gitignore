@@ -27,3 +27,6 @@ dist/
 # Déploiement : artefacts locaux éventuels
 *.tar
 *.tar.gz
+
+# Captures d'écran de test (locales)
+captures/

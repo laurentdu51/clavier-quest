@@ -9,6 +9,7 @@ class State extends Emitter {
 
   get layout() { return this.data.settings.layout; }
   get settings() { return this.data.settings; }
+  get legalConsent() { return !!this.data.settings.legalConsent; }
   get slots() { return this.data.slots; }
   get activeSlot() { return this.data.activeSlot; }
   get scores() { return this.data.scores || []; }
@@ -28,6 +29,13 @@ class State extends Emitter {
     this.data.settings.layout = layout;
     this.persist();
     this.emit("layout", layout);
+  }
+
+  /** Mémorise l'acceptation de l'information sur le stockage local. */
+  acceptLegal() {
+    this.data.settings.legalConsent = true;
+    this.persist();
+    this.emit("legal", true);
   }
 
   setProfile(patch) {

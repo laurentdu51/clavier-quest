@@ -349,6 +349,92 @@ body {
 }
 .card--credits .btn { align-self: center; }
 
+/* ---------- Liens de pied de page (accueil) ---------- */
+.site-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 16px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+.link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.link:hover { color: var(--text); }
+
+/* ---------- Informations légales ---------- */
+.legal {
+  width: min(760px, 92vw);
+  margin: 0 auto;
+  padding: 30px clamp(16px, 4vw, 40px) 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+.legal__block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 80px;
+}
+.legal__block h3 { font-size: 22px; color: var(--accent); }
+.legal__block h4 { font-size: 16px; margin-top: 10px; }
+.legal__block p, .legal__dl dd { color: var(--text); line-height: 1.6; }
+.legal__block a { color: var(--primary-2); }
+.legal__dl { display: flex; flex-direction: column; gap: 6px; }
+.legal__dl dt {
+  font-weight: 700;
+  color: var(--muted);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+}
+.legal__dl dd { margin: 0 0 8px; }
+.legal__list { display: flex; flex-direction: column; gap: 6px; padding-left: 4px; color: var(--text); }
+.legal__list li::before { content: "• "; color: var(--primary-2); }
+.legal code {
+  background: rgba(255, 255, 255, .08);
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: .9em;
+}
+.legal .btn { align-self: center; margin-top: 4px; }
+
+/* ---------- Bandeau stockage local ---------- */
+.cookie-notice {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 50;
+  width: min(680px, 92vw);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(30, 34, 69, .96);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+}
+.cookie-notice[hidden] { display: none; }
+.cookie-notice p { flex: 1; font-size: 13px; color: var(--muted); margin: 0; }
+.cookie-notice .btn { flex: none; }
+@media (max-width: 520px) {
+  .cookie-notice { flex-direction: column; align-items: stretch; text-align: center; }
+}
+
 /* ---------- Défi de vitesse ---------- */
 .challenge {
   flex: 1;

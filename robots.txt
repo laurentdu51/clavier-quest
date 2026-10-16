@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://clavier-quest.duhaz.fr/sitemap.xml
