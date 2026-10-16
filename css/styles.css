@@ -102,9 +102,10 @@ body {
 .layout-option.is-selected { border-color: var(--accent); background: rgba(0, 210, 168, .12); }
 
 /* ---------- Nom + avatar ---------- */
-.name-row { display: flex; gap: 10px; align-items: stretch; }
+.name-row { display: flex; gap: 10px; align-items: stretch; flex-wrap: wrap; }
 .input {
-  flex: 1;
+  flex: 1 1 200px;
+  min-width: 0;
   padding: 12px 14px;
   border-radius: 12px;
   border: 2px solid var(--line);
@@ -112,7 +113,13 @@ body {
   outline: none;
 }
 .input:focus { border-color: var(--accent); }
-.avatar-picker { display: flex; gap: 6px; }
+.avatar-picker {
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
 .avatar-option {
   width: 44px;
   border-radius: 12px;
